@@ -246,7 +246,7 @@ body::before {
 .wordmark {
   margin: 18px 0 6px;
   font-family: var(--font-display);
-  font-size: 1.85rem;
+  font-size: 2.6rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -257,16 +257,15 @@ body::before {
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 0 18px rgba(145, 71, 255, 0.35));
-  animation: wordmark-shimmer 7s ease-in-out infinite;
+  animation: wordmark-shimmer 3s ease-in-out infinite;
 }
 
 @keyframes wordmark-shimmer {
   0%,
-  60%,
   100% {
     background-position: 100% 0;
   }
-  30% {
+  50% {
     background-position: 0% 0;
   }
 }
@@ -375,6 +374,47 @@ a:focus-visible {
   background: linear-gradient(135deg, var(--color-primary-hover), #8b3ffb);
   box-shadow: 0 0 0 1px rgba(145, 71, 255, 0.55), 0 14px 36px rgba(145, 71, 255, 0.5);
   transform: scale(1.03) translateY(-2px);
+}
+
+/* Brand-colored cards */
+.link-youtube {
+  background: linear-gradient(135deg, #e62117, #b31217);
+  border-color: #e62117;
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(230, 33, 23, 0.35), 0 8px 24px rgba(230, 33, 23, 0.25);
+}
+
+.link-youtube:hover {
+  background: linear-gradient(135deg, #ff3b30, #d1181c);
+  border-color: #ff4d4d;
+  box-shadow: 0 0 0 1px rgba(230, 33, 23, 0.55), 0 12px 30px rgba(230, 33, 23, 0.4);
+}
+
+.link-discord {
+  background: linear-gradient(135deg, #5865f2, #4752c4);
+  border-color: #5865f2;
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(88, 101, 242, 0.35), 0 8px 24px rgba(88, 101, 242, 0.25);
+}
+
+.link-discord:hover {
+  background: linear-gradient(135deg, #6b76f5, #515ee0);
+  border-color: #7983f5;
+  box-shadow: 0 0 0 1px rgba(88, 101, 242, 0.55), 0 12px 30px rgba(88, 101, 242, 0.4);
+}
+
+.link-merch {
+  background: linear-gradient(135deg, #55c1f6, #2ea3e6);
+  border-color: #55c1f6;
+  color: #082436;
+  box-shadow: 0 0 0 1px rgba(85, 193, 246, 0.35), 0 8px 24px rgba(85, 193, 246, 0.22);
+}
+
+.link-merch:hover {
+  background: linear-gradient(135deg, #6fccf8, #3fb0ef);
+  border-color: #83d3f9;
+  color: #082436;
+  box-shadow: 0 0 0 1px rgba(85, 193, 246, 0.55), 0 12px 30px rgba(85, 193, 246, 0.38);
 }
 
 .contact {
@@ -494,7 +534,7 @@ a:focus-visible {
   }
 
   .wordmark {
-    font-size: 2rem;
+    font-size: 3rem;
   }
 
   .link-card {
@@ -504,5 +544,10 @@ a:focus-visible {
 
   .links-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  /* Odd item count: let the last card span the full row instead of orphaning */
+  .links-grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
