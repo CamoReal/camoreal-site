@@ -74,6 +74,67 @@ body::before {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
+/* Ambient drifting color orbs behind the content */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  will-change: transform;
+}
+
+.orb-1 {
+  width: 340px;
+  height: 340px;
+  top: -90px;
+  left: -110px;
+  background: rgba(145, 71, 255, 0.3);
+  animation: orb-drift-1 22s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+  width: 300px;
+  height: 300px;
+  bottom: -80px;
+  right: -100px;
+  background: rgba(124, 47, 240, 0.24);
+  animation: orb-drift-2 26s ease-in-out infinite alternate;
+}
+
+.orb-3 {
+  width: 220px;
+  height: 220px;
+  top: 42%;
+  right: -70px;
+  background: rgba(201, 168, 118, 0.13);
+  animation: orb-drift-3 30s ease-in-out infinite alternate;
+}
+
+@keyframes orb-drift-1 {
+  to {
+    transform: translate(70px, 90px) scale(1.15);
+  }
+}
+
+@keyframes orb-drift-2 {
+  to {
+    transform: translate(-80px, -70px) scale(1.1);
+  }
+}
+
+@keyframes orb-drift-3 {
+  to {
+    transform: translate(-50px, -100px) scale(1.2);
+  }
+}
+
 .hub {
   position: relative;
   z-index: 1;
@@ -130,6 +191,22 @@ body::before {
   margin: 0 auto;
 }
 
+/* Slowly rotating gradient ring around the avatar */
+.avatar-frame::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--color-primary), var(--color-secondary), #7c2ff0, var(--color-primary));
+  animation: ring-spin 9s linear infinite;
+}
+
+@keyframes ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .avatar,
 .avatar-fallback {
   position: absolute;
@@ -138,7 +215,7 @@ body::before {
   height: 100%;
   border-radius: 50%;
   border: 2px solid var(--color-border);
-  box-shadow: 0 0 0 4px var(--color-primary-muted), 0 8px 24px rgba(145, 71, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(145, 71, 255, 0.25);
 }
 
 .avatar {
@@ -173,7 +250,25 @@ body::before {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  text-shadow: 0 0 30px rgba(145, 71, 255, 0.35);
+  background: linear-gradient(100deg, var(--color-text) 42%, var(--color-primary-hover) 50%, var(--color-text) 58%);
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(145, 71, 255, 0.35));
+  animation: wordmark-shimmer 7s ease-in-out infinite;
+}
+
+@keyframes wordmark-shimmer {
+  0%,
+  60%,
+  100% {
+    background-position: 100% 0;
+  }
+  30% {
+    background-position: 0% 0;
+  }
 }
 
 .tagline {
@@ -190,6 +285,8 @@ body::before {
 }
 
 .link-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -213,6 +310,33 @@ body::before {
   height: 20px;
   flex-shrink: 0;
   fill: currentColor;
+}
+
+/* One-shot shine sweep across the card on hover */
+.link-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.09), transparent);
+  transform: skewX(-18deg);
+  pointer-events: none;
+}
+
+.link-card:hover::after {
+  animation: card-shine 0.7s ease;
+}
+
+.link-primary::after {
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+}
+
+@keyframes card-shine {
+  to {
+    left: 130%;
+  }
 }
 
 .link-card:hover {
@@ -316,16 +440,28 @@ a:focus-visible {
   opacity: 0.6;
 }
 
-/* Scroll-in entrance animation, driven by IntersectionObserver toggling .is-visible */
+/* Scroll-in entrance animation, driven by IntersectionObserver toggling .is-visible.
+   Uses a one-shot animation (not transitions) so it never interferes with hover
+   transitions or pins transform after revealing. Stagger via --reveal-delay. */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 [data-reveal].is-visible {
   opacity: 1;
-  transform: none;
+  animation: reveal-in 0.6s ease backwards;
+  animation-delay: var(--reveal-delay, 0s);
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -335,8 +471,14 @@ a:focus-visible {
 
   [data-reveal] {
     opacity: 1;
-    transform: none;
-    transition: none;
+    animation: none;
+  }
+
+  .orb,
+  .avatar-frame::before,
+  .wordmark,
+  .link-card::after {
+    animation: none !important;
   }
 }
 
