@@ -417,6 +417,20 @@ a:focus-visible {
   box-shadow: 0 0 0 1px rgba(85, 193, 246, 0.55), 0 12px 30px rgba(85, 193, 246, 0.38);
 }
 
+.link-cashapp {
+  background: linear-gradient(135deg, #00d632, #00b12a);
+  border-color: #00d632;
+  color: #03260d;
+  box-shadow: 0 0 0 1px rgba(0, 214, 50, 0.35), 0 8px 24px rgba(0, 214, 50, 0.22);
+}
+
+.link-cashapp:hover {
+  background: linear-gradient(135deg, #1fe14c, #00c72f);
+  border-color: #3ae55f;
+  color: #03260d;
+  box-shadow: 0 0 0 1px rgba(0, 214, 50, 0.55), 0 12px 30px rgba(0, 214, 50, 0.38);
+}
+
 .contact {
   width: 100%;
   display: flex;
