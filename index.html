@@ -1,118 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAMO | camoreal.com</title>
-  <meta name="description" content="CAMO — Twitch streamer building in the open. Content, chaos, and everything in between.">
-
-  <!-- Open Graph -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAMO — GTA VI Marathon</title>
+  <meta name="description" content="Join CAMO for the GTA VI Marathon. Watch the trailer and count down to the stream.">
+  <meta name="theme-color" content="#d7a6ce">
+  <meta property="og:title" content="CAMO — GTA VI Marathon">
+  <meta property="og:description" content="The GTA VI Marathon with CAMO.">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="CAMO">
-  <meta property="og:title" content="CAMO | camoreal.com">
-  <meta property="og:description" content="Twitch streamer building in the open. Content, chaos, and everything in between.">
   <meta property="og:url" content="https://camoreal.com">
   <meta property="og:image" content="https://camoreal.com/assets/og-image.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CAMO | camoreal.com">
-  <meta name="twitter:description" content="Twitch streamer building in the open. Content, chaos, and everything in between.">
-  <meta name="twitter:image" content="https://camoreal.com/assets/og-image.jpg">
-
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
+  <script src="scripts/config.js" defer></script>
+  <script src="scripts/artwork.js" defer></script>
+  <script src="scripts/audio.js" defer></script>
+  <script src="scripts/main.js" defer></script>
 </head>
 <body>
-  <div class="bg-orbs" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg width="0" height="0" class="art-defs" aria-hidden="true"><defs id="artDefs"></defs></svg>
+
+  <div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" hidden>
+    <div class="intro-grain" aria-hidden="true"></div>
+    <div class="intro-gate" id="introGate">
+      <span class="pink-logo gate-logo" role="img" aria-label="CAMO"></span>
+      <h2 id="introTitle">Welcome to the marathon.</h2>
+      <button class="button button-pink" id="enterSound" type="button"><span aria-hidden="true">◖))</span> Enter with sound <span aria-hidden="true">→</span></button>
+      <button class="text-button" id="enterSilent" type="button">Enter without sound</button>
+    </div>
+    <div class="intro-stage" id="introStage" aria-hidden="true" hidden>
+      <div class="intro-halo"></div><div class="intro-scan"></div>
+      <span class="pink-logo intro-mark" role="img" aria-label="CAMO"></span>
+      <span class="intro-caption">THE MARATHON STARTS HERE</span>
+      <div class="intro-progress"></div>
+    </div>
+    <video class="intro-video" id="introVideo" playsinline preload="none" aria-label="CAMO intro" hidden></video>
+    <button class="intro-skip" id="skipIntro" type="button" hidden>Skip intro <span aria-hidden="true">↗</span></button>
   </div>
 
-  <main class="hub">
-    <header class="hero" data-reveal>
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="avatar-frame">
-        <img class="avatar" id="avatar" src="assets/avatar.jpg" alt="CAMO profile photo" width="800" height="600" decoding="async" fetchpriority="high">
-        <span class="avatar-fallback" id="avatarFallback" aria-hidden="true">C</span>
-      </div>
-      <h1 class="wordmark">CAMO</h1>
-      <p class="tagline">Twitch streamer building in the open. Content, chaos, and everything in between.</p>
-    </header>
+  <div class="scene" aria-hidden="true">
+    <div class="sky-tint"></div><div class="sun"></div><div class="horizon"></div>
+    <div class="skyline" id="skyline"></div>
+    <div class="palm-layer palm-layer-left"><svg class="palm palm-left"><use href="#palm"/></svg></div>
+    <div class="palm-layer palm-layer-right"><svg class="palm palm-right"><use href="#palm"/></svg></div>
+    <div class="palm-layer palm-layer-far"><svg class="palm palm-far"><use href="#palm"/></svg></div>
+    <svg class="birds" viewBox="0 0 200 60"><path d="M20 30q8 -9 16 0q8 -9 16 0M120 12q6 -7 12 0q6 -7 12 0"/></svg>
+  </div>
+  <div id="site">
+    <main id="main" class="page" tabindex="-1">
+      <header class="hero" aria-labelledby="heroTitle">
+        <p class="eyebrow">A CAMO MARATHON</p>
+        <img class="hero-logo" src="assets/camo-palms.png" width="2400" height="537" alt="CAMO" fetchpriority="high">
+        <h1 id="heroTitle">GTA <span>VI</span> MARATHON</h1>
+        <p class="welcome">Don’t worry. This isn’t a speed run,<br>so settle in, <strong>we’re here a while.</strong></p>
+      </header>
 
-    <section class="stream" id="streamSection" aria-label="Live stream" hidden>
-      <div class="stream-frame" id="streamPlayer"></div>
-    </section>
+      <section class="trailer-section" id="trailer" aria-label="Marathon trailer">
+        <div class="trailer-frame" id="trailerFrame">
+          <div class="trailer-art" aria-hidden="true"><svg><use href="#palm"/></svg></div>
+          <div class="trailer-placeholder" id="trailerPlaceholder"><span class="trailer-mark" aria-hidden="true"></span><p>Trailer coming soon</p></div>
+        </div>
+        <a class="trailer-link" id="trailerLink" target="_blank" rel="noopener noreferrer" hidden>Link to my trailer ↗</a>
+        <span class="trailer-link unavailable" id="trailerLinkPending" aria-disabled="true" title="Available when the trailer is released">Link to my trailer ↗</span>
+      </section>
 
-    <nav class="links" aria-label="Links">
-      <div class="twitch-wrap" data-reveal>
-        <span class="live-badge" id="liveBadge" hidden><span class="live-dot" aria-hidden="true"></span>LIVE NOW!</span>
-        <a class="link-card link-primary" href="https://twitch.tv/camoreal" target="_blank" rel="noopener noreferrer">
-          <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 0 1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L23.429 10.286V0Zm15.715 9.6-3.429 3.428h-3.428l-3 3v-3H6.857V1.714h14.858Z"/><path d="M11.571 4.714h1.715v5.143h-1.715Zm4.715 0H18v5.143h-1.714Z"/></svg>
-          <span>Watch on Twitch</span>
+      <section class="marathon" id="marathon" aria-labelledby="countdownHeading">
+        <h2 id="countdownHeading">Going live in</h2>
+        <div class="countdown" id="countdown" role="timer" aria-label="Time until the marathon" aria-live="off">
+          <div><strong id="cdDays">--</strong><span>DAYS</span></div><b aria-hidden="true">:</b>
+          <div><strong id="cdHours">--</strong><span>HOURS</span></div><b aria-hidden="true">:</b>
+          <div><strong id="cdMins">--</strong><span>MINS</span></div><b aria-hidden="true">:</b>
+          <div><strong id="cdSecs">--</strong><span>SECS</span></div>
+        </div>
+        <p id="liveDate" class="live-date">November 19, 2026 · 12:00 AM EST</p>
+        <a class="twitch-button" href="https://twitch.tv/camoreal" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 0 1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L23.429 10.286V0Zm15.715 9.6-3.429 3.428h-3.428l-3 3v-3H6.857V1.714h14.858Z"/><path d="M11.571 4.714h1.715v5.143h-1.715Zm4.715 0H18v5.143h-1.714Z"/></svg>
+          Watch on Twitch <span aria-hidden="true">↗</span>
         </a>
-      </div>
-
-      <a class="link-card link-youtube" data-reveal style="--reveal-delay: 0.05s" href="https://www.youtube.com/@camowolf1815" target="_blank" rel="noopener noreferrer">
-        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg>
-        <span>YouTube</span>
-      </a>
-
-      <a class="link-card link-discord" data-reveal style="--reveal-delay: 0.1s" href="https://discord.gg/hn4Z76tfA8" target="_blank" rel="noopener noreferrer">
-        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
-        <span>Discord Community</span>
-      </a>
-
-      <a class="link-card link-merch" data-reveal style="--reveal-delay: 0.15s" href="https://www.yourprofessionalshop.com/camo" target="_blank" rel="noopener noreferrer">
-        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23Z"/></svg>
-        <span>Merch</span>
-      </a>
-
-      <a class="link-card link-cashapp" data-reveal style="--reveal-delay: 0.2s" href="https://cash.app/$CamoReal" target="_blank" rel="noopener noreferrer">
-        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.59 3.475a5.1 5.1 0 0 0-3.05-3.05c-1.31-.42-2.5-.42-4.92-.42H8.36c-2.4 0-3.61 0-4.9.4a5.1 5.1 0 0 0-3.05 3.06C0 4.765 0 5.965 0 8.365v7.27c0 2.41 0 3.6.4 4.9a5.1 5.1 0 0 0 3.05 3.05c1.3.41 2.5.41 4.9.41h7.28c2.41 0 3.61 0 4.9-.4a5.1 5.1 0 0 0 3.06-3.06c.41-1.3.41-2.5.41-4.9v-7.25c0-2.41 0-3.61-.41-4.91Zm-6.17 4.63-.93.93a.5.5 0 0 1-.67.01 5 5 0 0 0-3.22-1.18c-.97 0-1.94.32-1.94 1.21 0 .9 1.04 1.2 2.24 1.65 2.1.7 3.84 1.58 3.84 3.64 0 2.24-1.74 3.78-4.58 3.95l-.26 1.2a.49.49 0 0 1-.48.39H9.63l-.09-.01a.5.5 0 0 1-.38-.59l.28-1.27a6.54 6.54 0 0 1-2.88-1.57v-.01a.48.48 0 0 1 0-.68l1-.97a.49.49 0 0 1 .67 0c.91.86 2.13 1.34 3.39 1.32 1.3 0 2.17-.55 2.17-1.42 0-.87-.88-1.1-2.54-1.72-1.76-.63-3.43-1.52-3.43-3.6 0-2.24 1.86-3.33 4.07-3.43l.25-1.23a.48.48 0 0 1 .48-.38h1.78l.1.01c.26.06.43.31.37.57l-.27 1.37c.9.3 1.75.77 2.48 1.39l.02.02c.19.2.19.5 0 .69Z"/></svg>
-        <span>Donate Here</span>
-      </a>
-
+      </section>
+      <nav class="connect" id="connect" aria-label="Find CAMO online">
       <div class="links-grid">
-        <a class="link-card" data-reveal style="--reveal-delay: 0.25s" href="https://tiktok.com/@cammoo_" target="_blank" rel="noopener noreferrer">
+        <a class="link-card link-youtube" href="https://www.youtube.com/@camowolf1815" target="_blank" rel="noopener noreferrer">
+          <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg>
+          <span>YouTube</span>
+        </a>
+        <a class="link-card link-discord" href="https://discord.gg/hn4Z76tfA8" target="_blank" rel="noopener noreferrer">
+          <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
+          <span>Discord</span>
+        </a>
+        <a class="link-card link-merch" href="https://www.yourprofessionalshop.com/camo" target="_blank" rel="noopener noreferrer">
+          <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23Z"/></svg>
+          <span>Merch</span>
+        </a>
+        <a class="link-card link-cashapp" href="https://cash.app/$CamoReal" target="_blank" rel="noopener noreferrer">
+          <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.59 3.475a5.1 5.1 0 0 0-3.05-3.05c-1.31-.42-2.5-.42-4.92-.42H8.36c-2.4 0-3.61 0-4.9.4a5.1 5.1 0 0 0-3.05 3.06C0 4.765 0 5.965 0 8.365v7.27c0 2.41 0 3.6.4 4.9a5.1 5.1 0 0 0 3.05 3.05c1.3.41 2.5.41 4.9.41h7.28c2.41 0 3.61 0 4.9-.4a5.1 5.1 0 0 0 3.06-3.06c.41-1.3.41-2.5.41-4.9v-7.25c0-2.41 0-3.61-.41-4.91Zm-6.17 4.63-.93.93a.5.5 0 0 1-.67.01 5 5 0 0 0-3.22-1.18c-.97 0-1.94.32-1.94 1.21 0 .9 1.04 1.2 2.24 1.65 2.1.7 3.84 1.58 3.84 3.64 0 2.24-1.74 3.78-4.58 3.95l-.26 1.2a.49.49 0 0 1-.48.39H9.63l-.09-.01a.5.5 0 0 1-.38-.59l.28-1.27a6.54 6.54 0 0 1-2.88-1.57v-.01a.48.48 0 0 1 0-.68l1-.97a.49.49 0 0 1 .67 0c.91.86 2.13 1.34 3.39 1.32 1.3 0 2.17-.55 2.17-1.42 0-.87-.88-1.1-2.54-1.72-1.76-.63-3.43-1.52-3.43-3.6 0-2.24 1.86-3.33 4.07-3.43l.25-1.23a.48.48 0 0 1 .48-.38h1.78l.1.01c.26.06.43.31.37.57l-.27 1.37c.9.3 1.75.77 2.48 1.39l.02.02c.19.2.19.5 0 .69Z"/></svg>
+          <span>Donate</span>
+        </a>
+        <a class="link-card link-tiktok" href="https://tiktok.com/@cammoo_" target="_blank" rel="noopener noreferrer">
           <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.82c-.83-.72-1.36-1.75-1.45-2.9V2.5h-3.3v13.9c0 1.36-1.11 2.47-2.47 2.47a2.47 2.47 0 0 1-1.03-4.72 2.44 2.44 0 0 1 1.03-.22c.17 0 .34.02.5.05v-3.35a5.8 5.8 0 0 0-.5-.02A5.78 5.78 0 0 0 3.6 16.28 5.78 5.78 0 0 0 9.38 22.05a5.78 5.78 0 0 0 5.78-5.78V9.01a8.36 8.36 0 0 0 4.87 1.56V7.27a5.1 5.1 0 0 1-3.43-1.45Z"/></svg>
           <span>TikTok</span>
         </a>
-        <a class="link-card" data-reveal style="--reveal-delay: 0.3s" href="https://instagram.com/camm.moore" target="_blank" rel="noopener noreferrer">
+        <a class="link-card link-instagram" href="https://instagram.com/camm.moore" target="_blank" rel="noopener noreferrer">
           <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.42.56.21.96.48 1.38.9.42.42.69.81.9 1.38.17.42.37 1.05.42 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.42 2.23-.21.56-.48.96-.9 1.38-.42.42-.82.69-1.38.9-.42.17-1.06.37-2.23.42-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.42a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.37-1.06-.42-2.23-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.42-2.23.21-.56.48-.96.9-1.38.42-.42.82-.69 1.38-.9.42-.17 1.06-.37 2.23-.42C8.42 2.17 8.8 2.16 12 2.16Zm0 2.16c-3.15 0-3.5.01-4.74.07-.96.05-1.48.2-1.83.34-.46.18-.79.39-1.13.73-.34.34-.55.67-.73 1.13-.14.35-.3.87-.34 1.83-.06 1.24-.07 1.6-.07 4.74s.01 3.5.07 4.74c.05.96.2 1.48.34 1.83.18.46.39.79.73 1.13.34.34.67.55 1.13.73.35.14.87.3 1.83.34 1.24.06 1.6.07 4.74.07s3.5-.01 4.74-.07c.96-.05 1.48-.2 1.83-.34.46-.18.79-.39 1.13-.73.34-.34.55-.67.73-1.13.14-.35.3-.87.34-1.83.06-1.24.07-1.6.07-4.74s-.01-3.5-.07-4.74c-.05-.96-.2-1.48-.34-1.83a2.98 2.98 0 0 0-.73-1.13 2.98 2.98 0 0 0-1.13-.73c-.35-.14-.87-.3-1.83-.34-1.24-.06-1.6-.07-4.74-.07Zm0 3.68a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2.16a2.54 2.54 0 1 0 0 5.08 2.54 2.54 0 0 0 0-5.08Zm5.98-2.4a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0Z"/></svg>
           <span>Instagram</span>
         </a>
-        <a class="link-card" data-reveal style="--reveal-delay: 0.35s" href="https://x.com/TheCamoMoore" target="_blank" rel="noopener noreferrer">
+        <a class="link-card link-x" href="https://x.com/TheCamoMoore" target="_blank" rel="noopener noreferrer">
           <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.82l4.71 6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12Z"/></svg>
           <span>X / Twitter</span>
         </a>
+        <a class="link-card link-email" href="mailto:hi@camoreal.com">
+          <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5Zm2.2.5 7.3 5.84a.8.8 0 0 0 1 0L19.8 6Zm15.8 1.29-7.02 5.62a2.8 2.8 0 0 1-3.5 0L4.46 7.29V18h15.54Z"/></svg>
+          <span>Email</span>
+        </a>
       </div>
-    </nav>
 
-    <section class="contact" data-reveal aria-label="Contact">
-      <a class="contact-link" href="mailto:hi@camoreal.com">
-        <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5Zm2.2.5 7.3 5.84a.8.8 0 0 0 1 0L19.8 6Zm15.8 1.29-7.02 5.62a2.8 2.8 0 0 1-3.5 0L4.46 7.29V18h15.54Z"/></svg>
-        <span>hi@camoreal.com</span>
-      </a>
-    </section>
-
-    <footer class="footer" data-reveal>
-      <p class="footer-wordmark">CAMO</p>
-      <p>&copy; <span id="year"></span> CAMO. All rights reserved.</p>
-      <p class="footer-easter-egg">built different.</p>
-    </footer>
-  </main>
-
-  <script src="https://player.twitch.tv/js/embed/v1.js"></script>
-  <script src="scripts/main.js"></script>
+      </nav>
+      <footer class="footer"><button class="replay" id="replayIntro" type="button">Replay intro ↻</button><p>© <span id="year">2026</span> CAMO</p></footer>
+    </main>
+  </div>
+  <noscript><style>.replay{display:none}</style></noscript>
 </body>
 </html>
