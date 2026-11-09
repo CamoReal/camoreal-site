@@ -4,7 +4,12 @@ window.CAMO_CONFIG = {
   TRAILER_YOUTUBE_ID: '',
   // Or use a local/hosted MP4. This takes precedence over the YouTube ID.
   TRAILER_VIDEO: '',
-  // To replace the animated intro, add assets/intro.mp4 and set this path.
-  INTRO_VIDEO: '',
+  // Opening animation, with its own sound.
+  INTRO_VIDEO: 'assets/intro-landscape.mp4',
+  INTRO_VIDEO_PORTRAIT: 'assets/intro-portrait.mp4',
+  // Separate synth for the fade into the site. Off for now; set true to use it.
+  INTRO_SYNTH: false,
+  // When the logo starts fading in those files; the synth would start here.
+  INTRO_FADE_AT_MS: 3780,
   INTRO_DURATION_MS: 3900,
 };
