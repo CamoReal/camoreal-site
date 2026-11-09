@@ -48,7 +48,7 @@
     $('trailerLinkPending').hidden = true;
   }
 
-  const intro = $('intro'), stage = $('introStage'), video = $('introVideo');
+  const intro = $('intro'), gate = $('introGate'), stage = $('introStage'), video = $('introVideo');
   const site = $('site'), reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const portrait = window.matchMedia('(orientation: portrait)');
   // A single fixed scene follows scrolling at three depths. No scrolling panels.
@@ -66,21 +66,14 @@
   reduced.addEventListener('change',queueScene);
   paintScene();
   const rhythm = config.INTRO_SYNTH ? window.camoRhythm : { arm() {}, cue() {}, cancel() {} };
-  const soundEvents = ['mousedown','touchend','keydown'];
   let running = false, timers = [], restoreFocus = null;
-  // Browsers block sound until the visitor interacts. Their first tap, click or key turns it on.
-  function stopWaitingForSound() { soundEvents.forEach(type => window.removeEventListener(type,unmute,true)); }
-  function unmute(event) {
-    if (event.key === 'Escape') return;
-    stopWaitingForSound(); video.muted = false;
-    if (running && video.paused) video.play().catch(() => { video.muted = true; video.play().catch(() => {}); });
-  }
+  function introSource() { return portrait.matches ? config.INTRO_VIDEO_PORTRAIT : config.INTRO_VIDEO; }
   function schedule(fn,ms) { timers.push(setTimeout(fn,ms)); }
   function clearTimers() { timers.forEach(clearTimeout); timers = []; }
-  function remember() { try { sessionStorage.setItem('camo-intro-v2','seen'); } catch {} }
+  function remember() { try { sessionStorage.setItem('camo-intro-v3','seen'); } catch {} }
   function finish() {
     if (intro.hidden) return;
-    clearTimers(); stopWaitingForSound(); video.pause();
+    clearTimers(); video.pause();
     video.hidden = true; intro.hidden = true; intro.classList.remove('is-leaving');
     stage.classList.remove('playing'); stage.hidden = true; running = false;
     site.inert = false; document.body.classList.remove('intro-active'); remember();
@@ -94,8 +87,11 @@
     clearTimers(); restoreFocus = isReplay ? $('replayIntro') : null;
     intro.hidden = false; intro.classList.remove('is-leaving');
     stage.hidden = true; stage.classList.remove('playing'); video.hidden = true;
-    site.inert = true; document.body.classList.add('intro-active');
-    start();
+    $('skipIntro').hidden = true; site.inert = true; document.body.classList.add('intro-active');
+    // Browsers only allow sound after a click, and Replay already is one. First visits get the Enter button.
+    if (isReplay) { gate.hidden = true; start(); return; }
+    gate.hidden = false; video.src = introSource();
+    $('enterIntro').focus({preventScroll:true});
   }
   function animatedIntro() {
     video.hidden = true; stage.hidden = false;
@@ -105,10 +101,11 @@
   function start() {
     if (running) return; running = true;
     rhythm.arm();
-    $('skipIntro').hidden = false; $('skipIntro').focus({preventScroll:true});
-    const src = portrait.matches ? config.INTRO_VIDEO_PORTRAIT : config.INTRO_VIDEO;
+    gate.hidden = true; $('skipIntro').hidden = false; $('skipIntro').focus({preventScroll:true});
+    const src = introSource();
     if (src && !reduced.matches) {
-      video.src = src; video.muted = false; video.hidden = false;
+      if (video.getAttribute('src') === src) video.currentTime = 0; else video.src = src;
+      video.muted = false; video.hidden = false;
       let failed = false, started = false;
       const fallback = () => { if (failed || !running) return; failed = true; clearTimers(); video.pause(); animatedIntro(); };
       video.onended = () => { if (running && !failed) leave(); };
@@ -117,18 +114,14 @@
         if (started) return; started = true;
         schedule(() => rhythm.cue(),config.INTRO_FADE_AT_MS);
       };
-      video.play().catch(error => {
-        if (error.name !== 'NotAllowedError') throw error;
-        video.muted = true;
-        soundEvents.forEach(type => window.addEventListener(type,unmute,{capture:true,passive:true}));
-        return video.play();
-      }).catch(fallback);
+      video.play().catch(fallback);
       // Never hold the site back on a slow connection or a stalled file.
       schedule(() => { if (running && !failed && !started) leave(); },2500);
       schedule(() => { if (running && !failed) leave(); },8000);
     } else animatedIntro();
   }
   function skip() { rhythm.cancel(); finish(); }
+  $('enterIntro').addEventListener('click',start);
   $('skipIntro').addEventListener('click',skip);
   $('replayIntro').addEventListener('click',() => showIntro(true));
   intro.addEventListener('keydown',event => {
@@ -140,6 +133,6 @@
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     }
   });
-  let seen = false; try { seen = sessionStorage.getItem('camo-intro-v2') === 'seen'; } catch {}
+  let seen = false; try { seen = sessionStorage.getItem('camo-intro-v3') === 'seen'; } catch {}
   if (!seen && !reduced.matches) showIntro();
 })();

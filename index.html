@@ -24,8 +24,13 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <svg width="0" height="0" class="art-defs" aria-hidden="true"><defs id="artDefs"></defs></svg>
 
-  <div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="CAMO intro" hidden>
+  <div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" hidden>
     <div class="intro-grain" aria-hidden="true"></div>
+    <div class="intro-gate" id="introGate">
+      <span class="pink-logo gate-logo" role="img" aria-label="CAMO"></span>
+      <h2 id="introTitle">Welcome to the marathon.</h2>
+      <button class="button button-pink" id="enterIntro" type="button">Enter <span aria-hidden="true">→</span></button>
+    </div>
     <div class="intro-stage" id="introStage" aria-hidden="true" hidden>
       <div class="intro-halo"></div><div class="intro-scan"></div>
       <span class="pink-logo intro-mark" role="img" aria-label="CAMO"></span>
