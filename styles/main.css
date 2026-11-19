@@ -21,3 +21,11 @@
 @media(max-width:350px){.page{width:calc(100% - 28px);padding-top:32px}h1{font-size:30px}.welcome{font-size:12px}.countdown strong{font-size:46px}.link-card{padding:14px 8px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.palm-layer{will-change:auto}.intro-stage .intro-mark,.intro-stage .intro-caption{opacity:1;transform:none}.button:hover,.twitch-button:hover,.link-card:hover{transform:none}}
 @media(min-aspect-ratio:11/5){.intro-video{object-fit:contain}}
+.live-section{padding:30px 0 34px}
+.live-badge{display:inline-flex;align-items:center;gap:9px;margin:0 0 14px;padding:9px 18px;border-radius:8px;background:#e5162b;color:#fff;font-weight:800;font-size:15px;letter-spacing:2px;box-shadow:0 0 18px #ff1f3a66,0 6px 16px #8a0c1a40}
+.live-dot{width:10px;height:10px;border-radius:50%;background:#fff;animation:live-pulse 1.4s ease-in-out infinite}
+@keyframes live-pulse{50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.live-dot{animation:none}}
+.live-frame{background:#100d16}
+.live-section .twitch-button{margin-top:18px}
+@media(max-width:700px){.live-section{padding:22px 0 26px}.live-badge{font-size:13px;padding:8px 15px}}

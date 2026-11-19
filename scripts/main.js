@@ -48,6 +48,14 @@
     $('trailerLinkPending').hidden = true;
   }
 
+  // Live stream: Twitch only plays on hosts listed as "parent", so include whatever host serves the page.
+  const parents = [...new Set([location.hostname,'camoreal.com','www.camoreal.com'].filter(Boolean))];
+  const live = document.createElement('iframe');
+  live.src = `https://player.twitch.tv/?channel=camoreal&${parents.map(h => `parent=${encodeURIComponent(h)}`).join('&')}&muted=true`;
+  live.title = 'CAMO live on Twitch'; live.allowFullscreen = true;
+  live.allow = 'autoplay; fullscreen; picture-in-picture';
+  $('liveFrame').replaceChildren(live); $('liveFrame').classList.add('has-video');
+
   const intro = $('intro'), gate = $('introGate'), stage = $('introStage'), video = $('introVideo');
   const site = $('site'), reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const portrait = window.matchMedia('(orientation: portrait)');
