@@ -1,6 +1,6 @@
 // Existing marathon settings retained. Change these when the plan changes.
 window.CAMO_CONFIG = {
-  GO_LIVE_AT: '2026-11-19T00:00:00-05:00',
+  GO_LIVE_AT: '2026-11-19T19:00:00-05:00',
   TRAILER_YOUTUBE_ID: 'ySOUnDRfEPw',
   // Or use a local/hosted MP4. This takes precedence over the YouTube ID.
   TRAILER_VIDEO: '',
